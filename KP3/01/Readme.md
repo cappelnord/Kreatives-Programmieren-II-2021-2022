@@ -40,9 +40,13 @@ Die Bewertung findet hauptsächlich im Rahmen der Veranstaltung *Kreatives Progr
 
 ## Vorstellungrunde
 
-## Ausblick und Wünsche
+## Links zu Zeug von Patrick
 
-* ... ?
+* [Live Coding Band Benoit and the Mandelbrots](https://www.the-mandelbrots.de/)
+* [Audio-visuelles Ensemble Ganzfeld](https://ganzfeld.me)
+* [Code-Improvisation mit Pilzen](https://www.youtube.com/watch?v=fPrIcnxqhF8)
+* [Web Audio Kram (als Beispiel)](https://ccl.borgeat.de)
+* [ARquatic, Augmented Reality & Piano Live Coding](https://www.youtube.com/watch?v=im6d3-9jmD0)
 
 ## Links & Literatur
 
