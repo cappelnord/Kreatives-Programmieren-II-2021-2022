@@ -2,7 +2,7 @@
 
 ## Semesterüberblick
 
-* 13.10.2021 - **[Überblick](01)**
+* 13.10.2021 - **[Überblick](01)** (online)
 * 20.10.2021 - **[SuperCollider I](02)**
 * 27.10.2021 - **[SuperCollider II](03)**
 * 03.11.2021 - **[SuperCollider III](04)**
