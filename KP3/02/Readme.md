@@ -4,6 +4,15 @@
 
 ### Wieso eine Programmiersprache nutzen um Musik und Klang zu erzeugen?
 
+* Einsichten in den Klang zu bekommen
+* Einsichten in Technologie
+* Neue Sichtweisen auf Musik
+* Neues Werkzeug im Werkzeugkasten des Musikers
+* Sound in praktischen Anwendungen
+* Tools und Plugins entwickeln (z.B. mit [Juce](https://juce.com/))
+* Einsichten in die Welt: Auditory Displays, Sonification
+* Durch Automatisierung sind neue Techniken denkbar die mit gängigen Tools manuell zu aufwändig wären.
+
 ### SuperCollider
 
 * [Download](https://supercollider.github.io/download)
@@ -34,10 +43,6 @@ sclang und scsynth kommunizieren über [Open Sound Control](http://opensoundcont
 * [Getting Started with SuperCollider](https://doc.sccode.org/Tutorials/Getting-Started/00-Getting-Started-With-SC.html)
 * [Eli Fieldsteel Tutorials auf YouTube](https://www.youtube.com/c/elifieldsteel/videos)
 * [Weitere Tutorials](https://github.com/supercollider/supercollider/wiki/Tutorials)
-
-### Kurzer Einblick in die IDE und Live Beispiele
-
-[02_code_beispiele.scd](02_code_beispiele.scd)
 
 ### Ressourcen
 
