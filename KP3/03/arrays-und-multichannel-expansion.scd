@@ -9,6 +9,10 @@ s.boot;
 
 // () ist ein leeres Event, ein mit dem Dictionary verwandtes Objekt
 // Help: Event
+();
+
+().dump; // .dump message hilft uns mehr über ein Objekt zu erfahren.
+
 
 // Wir können ein Event auch weiter parametrisieren, z.B.
 // eine musikalische Stufe, Skala, Oktave bestimmen:
@@ -23,7 +27,7 @@ s.boot;
 (degree: 3, scale: Scale.minor).play;
 
 
-// wir können auch direkt die Frequenz angeben
+// wir können auch direkt eine Frequenz angeben
 (freq: 200).play;
 
 
@@ -39,7 +43,7 @@ s.boot;
 {SinOsc.ar(550) * 0.1}.play;
 {SinOsc.ar(440) * 0.1}.play;
 
-// Wenn wir den gleichen Synthesecode in einen Ndef packen
+// Wenn wir den gleichen Synthese-Code in einen Ndef packen
 // dann wird der bereits erklingende Klang durch den neuen ersetzt.
 
 Ndef(\apfel, {SinOsc.ar(550) * 0.1}).play;
@@ -60,8 +64,8 @@ Ndef(\apfel, {Saw.ar(400) * 0.1});
 
 Ndef(\apfel).stop;
 
-// Ndefs können auch Parameter haben. Hierrüber können wir z.B.
-// eine Frequenz steuern.
+// Ndefs können auch Parameter haben.
+// Als Beispiel steuern wir hier die Frequenz eines Oszillators.
 
 Ndef(\apfel, {| freq = 200| SinOsc.ar(freq) * 0.1}).play;
 Ndef(\apfel).set(\freq, 600);
@@ -83,11 +87,12 @@ Ndef(\apfel).stop;
 // Help: Array
 
 // ... ähneln erstmal sehr denen von Python:
-// Wir können Objekte jeglichen Typs dort ablegen:
+
+// Wir können Objekte jeglichen Typs in ihnen speichern:
 
 x = [50, "Apfel", {}, SinOsc];
 
-// Oftmals ist es aber sinnvoller Objekte des gleichen Typs in einem Array zu fassen.
+// Oftmals ist es aber sinnvoller Objekte des gleichen Typs in einen Array zu packen.
 
 x = [100, 200, 300, 400];
 
@@ -95,7 +100,7 @@ x = [100, 200, 300, 400];
 
 x[0];
 
-// ... und einzelne Werte des Arrays verändern
+// ... und einzelne Werte des Arrays verändern.
 
 x[0] = 1000;
 
@@ -121,19 +126,16 @@ x.sin; // Sinus für jedes Element des Arrays
 
 
 // Wir können auch 2 Arrays miteinander verrechnen.
-//
 
 x = [1, 2, 3, 4];
 y = [1, 10, 100, 1000];
 
 x * y;
 
-// Wir sehen: Die Elemente im Array werden
-// miteinander verrechnet.
+// Wir sehen: Die Elemente im Array werden jeweils miteinander verrechnet.
 
 
-// Was passiert wenn Arrays nicht die
-// gleiche Länge haben?
+// Was passiert wenn Arrays nicht die gleiche Länge haben?
 
 x = [1, 2, 3, 4];
 y = [1, 10, 100];
@@ -146,6 +148,7 @@ x * y;
 // Exkurs: for-Schleife in SuperCollider.
 // .do wird in SuperCollider fast immer als "for" bzw. "foreach"
 // Schleife genutzt.
+
 
 (
 // Zählschleife
@@ -163,7 +166,7 @@ x * y;
 
 
 // Auf der Klangsyntheseseite steht ein Array für
-// ein mehrkanaliges Signal. Für Stereosound brauchen
+// ein mehrkanaliges Signal. Für Stereo-Sound brauchen
 // wir z.B. 2 Kanäle.
 
 
@@ -173,7 +176,7 @@ Ndef(\stereo, { [Saw.ar(50), Saw.ar(400)] * 0.1}).play;
 
 
 // Über Multichannel Expansion werden immer, wenn als
-// Argument für ein UGen ein Array genutzt wird mehrere
+// Argument für ein UGen ein Array genutzt wird, mehrere
 // Instanzen des UGens erzeugt.
 
 // Help: Multichannel Expansion
@@ -183,10 +186,10 @@ Ndef(\stereo, { [Saw.ar(50), Saw.ar(400)] * 0.1}).play;
 Ndef(\stereo, { Saw.ar([50, 400]) * 0.1}).play;
 
 
-// Wir können beliebig viele Audiosignale paralell führen.
-// Dies ist auch sehr gängig in der Klangsynthese. Mit .sum
-// können wir mehrkanalige Signale dann wieder zusammenmischen.
-// mit .dup duplizieren wir das Signal. Dadurch erhalten wir
+// Wir können nahezu beliebig viele Audiosignale paralell führen.
+// Dies ist auch sehr gängig in der Klangsynthese (z.B. additive Synthese).
+// Mit .sum (oder anderen UGens/Methoden) können wir mehrkanalige Signale dann
+// wieder zusammenmischen. mit .dup duplizieren wir das Signal. Dadurch erhalten wir
 // wieder ein Stereo Signal (beide Seiten gleich).
 
 Ndef(\stereo, { Saw.ar([50, 400, 800, 1200]).sum.dup * 0.1}).play;
@@ -198,11 +201,12 @@ Ndef(\stereo, { Saw.ar([50, 400, 800, 1200]).sum.dup * 0.1}).play;
 Ndef(\stereo, { Splay.ar(Saw.ar([50, 400, 800, 1200])) * 0.1}).play;
 
 
-// Alle regeln (Operationen auf Arrays, Operationen mit Arrays) von
-// oben gelten auch auf der Klangsyntheseseite. Dies ist ein Beispiel
-// additiver Synthese bei der wir sinusartige Obertöne (ganzzahlige vielfache
-// einer Grundfrequenz) mit einer jeweilgen Amplitude multiplizieren und
-// zusammen mischen.
+// Alle Regeln (Operationen auf Arrays, Operationen mit Arrays) von
+// oben gelten auch auf Seite der Klangsynthese.
+
+// Dies ist ein Beispiel additiver Synthese bei der wir sinusartige Obertöne
+// (ganzzahlige vielfache einer Grundfrequenz) mit einer jeweilgen Amplitude
+// multiplizieren und zusammen mischen.
 
 Ndef(\additiv, { (SinOsc.ar([1, 3, 5, 7, 9] * 300) * [1, 0.6, 0.25, 1, 0.25]).sum.dup * 0.1}).play
 
