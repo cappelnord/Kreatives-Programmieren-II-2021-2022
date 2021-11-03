@@ -8,5 +8,4 @@
 
 ### Arrays und Multichannel-Expansion
 
-[arrays-und-multichannel-expansion.scd]
-
+[arrays-und-multichannel-expansion.scd](arrays-und-multichannel-expansion.scd)
