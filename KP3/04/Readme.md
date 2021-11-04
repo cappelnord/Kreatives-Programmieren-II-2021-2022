@@ -8,11 +8,9 @@
 
 ### Weiter im "Quell"-Text
 
-* Eomfache Aufnahme von Audio
+* Einfache Aufnahme von Audio
 * .ar/.kr
 * MouseX, MouseY, Lag
-* Wiederholung Variablen
-* Mehrere Ndefs zusammenführen
 
 * Quelltext: [04.scd](04.scd)
 
