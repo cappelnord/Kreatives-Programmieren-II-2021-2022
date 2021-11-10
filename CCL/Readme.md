@@ -4,7 +4,7 @@
 
 ### [15.10.2021 | Welcome & Planning](00_intro)
 
-### 29.10.2021 | Bytebeat
+### [29.10.2021 | Bytebeat](01_bytebeat)
 
 ### 12.11.2021 | (Glitch)
 

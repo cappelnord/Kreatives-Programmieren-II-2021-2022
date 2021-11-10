@@ -13,21 +13,36 @@
 - CHARS
   - https://en.wikipedia.org/wiki/Character_(computing)
   - https://en.wikipedia.org/wiki/C_(programming_language)#Character_set
-
-  - signedness: signed (0...255) vs. unsigned (-127...128)
+  - signed (0...255) vs. unsigned (-127...128)
 
 - INTEGER OVERFLOW
   - https://en.wikipedia.org/wiki/Integer_overflow
 
-- Let's saw!
+- LET'S SAW!
   - [bytebeat.c](bytebeat.c)
   - `t` counts up to 4.294.967.296 (32-bit!)
 
 - ENCODING (requires [FFmpeg](https://ffmpeg.org/download.html))
- - `./bytebeat | head -c 40000 | ffmpeg -f u8 -ar 8000 -ac 1 -i - -c:a pcm_u8 -y bytebeat.wav`
+  - `./bytebeat | head -c 40000 | ffmpeg -f u8 -ar 8000 -ac 1 -i - -c:a pcm_u8 -y bytebeat.wav`
 
 - FREQUENCY
- - sample rate / data type size (8000 / 255 = 31.3725490196 Hz)
+  - sample rate / data type size (8000 / 255 = 31.3725490196 Hz)
+
+- MATH
+  - `*` or `/` ---> frequency control
+  - `+` ---> phase shift
+  - `-` ---> invert signal
+  - `%` ---> wrapping `t` (results in frequency and amplitude change)
+
+- BIWISE
+  - `&` ---> square wave
+  - `|`, `^`, `<<`, `>>` ---> ...
+
+- RELATIONAL
+  - `((t%8000)>4000)*t` ---> start 'n' stop (every 0.5 sec. for a sampling rate of 8kHz)
+
+- SIERPINSKI
+  - `t&t>>8`
 
 ## Literature & Links
 
