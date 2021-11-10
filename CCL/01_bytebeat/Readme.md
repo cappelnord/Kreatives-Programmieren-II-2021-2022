@@ -13,7 +13,7 @@
 - CHARS
   - https://en.wikipedia.org/wiki/Character_(computing)
   - https://en.wikipedia.org/wiki/C_(programming_language)#Character_set
-  - signed (0...255) vs. unsigned (-127...128)
+  - unsigned (0...255) vs. signed (-127...128)
 
 - INTEGER OVERFLOW
   - https://en.wikipedia.org/wiki/Integer_overflow
