@@ -34,7 +34,7 @@
   - `-` ---> invert signal
   - `%` ---> wrapping `t` (results in frequency and amplitude change)
 
-- BIWISE
+- BITWISE
   - `&` ---> square wave
   - `|`, `^`, `<<`, `>>` ---> ...
 
