@@ -23,7 +23,7 @@
   - `t` counts up to 4.294.967.296 (32-bit!)
 
 - ENCODING (requires [FFmpeg](https://ffmpeg.org/download.html))
-  - `./bytebeat | head -c 40000 | ffmpeg -f u8 -ar 8000 -ac 1 -i - -c:a pcm_u8 -y bytebeat.wav`
+  - `./bytebeat | head -c 40000 | ffmpeg -f u8 -ar 8000 -ac 1 -i - -c:a pcm_u8 -y bytebeat.wav` (5 sec. saw wave)
 
 - FREQUENCY
   - sample rate / data type size (8000 / 255 = 31.3725490196 Hz)
@@ -46,6 +46,7 @@
 
 ## Literature & Links
 
+- [HTML5 Bytebeat](https://greggman.com/downloads/examples/html5bytebeat/html5bytebeat.html)
 - [Discovering novel computer music techniques by exploring the space of short computer programs](https://arxiv.org/abs/1112.1368)
 - [Algorithmic symphonies from one line of code -- how and why?](http://viznut.fi/texts-en/bytebeat_algorithmic_symphonies.html)
 - [Some deep analysis of one-line music programs.](http://viznut.fi/texts-en/bytebeat_deep_analysis.html)
