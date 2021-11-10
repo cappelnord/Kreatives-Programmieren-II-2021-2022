@@ -2,7 +2,7 @@
 
 ## Semesterüberblick
 
-### 15.10.2021 | Welcome & Planning
+### [15.10.2021 | Welcome & Planning](00_intro)
 
 ### 29.10.2021 | Bytebeat
 
