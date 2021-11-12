@@ -7,8 +7,8 @@
 * 27.10.2021 - **[SuperCollider II](03)**
 * 03.11.2021 - **[SuperCollider III](04)**
 * 10.11.2021 - **[SuperCollider IV](05)** 
-* 17.11.2021 - **[SuperCollider V](06)** (Präsentation Übungsaufgaben)
-* 24.11.2021
+* 17.11.2021 - **[SuperCollider V](06)** 
+* 24.11.2021 - **[SuperCollider VI](07)** (Präsentation Übungsaufgaben)
 * 01.12.2021
 * 08.12.2021
 * 15.12.2021
