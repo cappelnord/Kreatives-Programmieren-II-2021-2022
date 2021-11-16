@@ -39,6 +39,7 @@ Ndef(\sin).set(\control, Ndef(\tri));
 
 Ndef(\sin).clear;
 
+
 // Low Frequency Ugens sind nicht Band limitiert
 // Das beudeted allerdings auch dass es bei hohen Frequenzen zu Aliasing kommen kann:
 
@@ -100,6 +101,7 @@ Ndef(\filterbank, {
 
 Ndef(\filterbank).play;
 )
+
 
 // Und nun mit einem einfachen Delay ohne Feedback:
 
@@ -205,11 +207,11 @@ Ndef(\fC, {
 Ndef(\fC).play;
 )
 
+
 // Bei "exception in real time: alloc failed, increase server's memory allocation (e.g. via ServerOptions)":
-// Die Server Memory Size zu erhöhen damit wir auch längere delay Times Einstellen können
+// Die Server Memory Size zu erhöhen damit wir auch längere delaytimes Einstellen können
 
 o = Server.default.options;
-
 o.memSize = 4096 * 2;
 
 // reboot nicht vergessen
