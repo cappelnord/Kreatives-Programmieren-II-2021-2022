@@ -10,9 +10,9 @@
 * 17.11.2021 - **[SuperCollider V](06)** 
 * 24.11.2021 - **[SuperCollider VI](07)** (Präsentation Übungsaufgaben)
 * 01.12.2021 - **[sclang](08)** (Eventuell weiterhin Präsentation Übungsaufgaben)
-* 08.12.2021 - **[Zufall 1](09)**
-* 15.12.2021 - **[Zufall 2](10)**<br/>**Kurzreferate:**<br/>Zufallsgeneratoren<br/>Zufall in der Musik
-* 22.12.2021 - **[Zufall 3](11)**
+* 08.12.2021 - **[sclang II](09)** (Eventuell weiterhin Präsentation Übungsaufgaben)
+* 15.12.2021 - **[Zufall ?](10)**
+* 22.12.2021 - **[Zufall ?](11)**
 * 12.01.2022
 * 19.01.2022
 * 26.01.2022
