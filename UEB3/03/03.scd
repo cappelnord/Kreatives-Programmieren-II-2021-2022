@@ -2,8 +2,7 @@
 // Die Subtraktive Synthese !
 // D.h. wir formen unseren Klang, indem wir von einem reichaltigem Spektrum etwas wegnehmen
 
-// Dazu benötigen wir allem voran erst einmal Filter
-// Filter
+// Dazu benötigen wir allem voran erst einmal Filter,
 
 // Am einfachsten lassen sich Filter an einem weißen Rauschen demonstrieren:
 
@@ -163,6 +162,7 @@ Ndef(\filter).set(\ffreq, 1200);
 
 
 //Mit .map können wir auch einen weiteren Ndef zur filterkontrolle benutzen
+
 Ndef(\lfo, { LFNoise0.kr(2).exprange(100, 2000) });
 
 Ndef(\filter).play;
@@ -253,7 +253,6 @@ Ndef(\filterbank, {
 	amps = [0.1, 0.05, 0.1, 0.1, 0.05];
 	ringtimes = [3, 1, 2, 1, 1]; // decay times der Resonatoren
 
-
 	snd = DynKlank.ar(`[freqs, amps, ringtimes], snd, freqscale: MouseX.kr(1, 6));
 	snd.dup * 0.1; // Kann sehr schnell sehr Laut werden
 
@@ -325,6 +324,7 @@ Ndef(\filterbank).play;
 // Für nächstes Mal könnte ihr euch  gerne noch den BPeakEQ als Equalizer anschauen:
 BPeakEQ.ar(in, freq: 1200.0, rq: 1.0, db: 0.0, mul: 1.0, add: 0.0
 
-
+Pn
+Ppar
 
 
