@@ -115,3 +115,430 @@ Ndef(\operatoren, {
 
 // Diese Infos zu den Operatoren und Methodenaufrufen ist noch unvollständig.
 // Ein wichtiger Punkt wird nächste Sitzung noch dazukommen!
+
+
+// .dump ist eine praktische Nachricht um mehr über ein Objekt zu erfahren
+5.dump;
+SinOsc.dump;
+SinOsc.ar.dump;
+
+// [Empfänger].[Nachricht]([Argument1], [Argument2], ...)
+// Wenn wir kein Argument haben können wir die runden Klammern auch weglassen.
+
+5.sin();
+5.sin;
+
+5.cos();
+5.cos;
+
+-1.abs();
+-1.abs;
+
+2.sqrt();
+2.sqrt;
+
+// Es können auch mehrere Nachrichten/Methodenaufrufe nachaneinder jeweils
+// auf das Ergebnis des davorherigen Aufrufs angewandt werden.
+// (Method Chaining)
+
+2.sqrt.neg;
+SinOsc.ar(440).abs;
+
+
+// Argumente können in einem Methodenaufruf entweder über die
+// Reihenfolge angegeben werden
+
+SinOsc.ar(440, pi, 0.5)
+
+// Wir können die Reihenfolge auch überspringen indem wir den Namen
+// des Arguments davor setzten. name: Wert, name: Wert
+// (pi ist hierbei auch ein Wert/Konstante)
+
+// Die Reihenfolge ist dann komplett egal
+
+SinOsc.ar(phase: pi, freq: 440)
+
+// Man kann Reihenfolge und benannte Argumente auch mischen
+
+SinOsc.ar(440, add: 0.5);
+
+// Was aber nicht geht ist erst ein benanntes Argument zu nehmen und
+// dann noch eines ohne Namen.
+
+SinOsc.ar(phase: pi, 440)
+
+// Manchal ist es auch einfach interessant die Reihenfolge beizubehalte
+// aber durch die Namen der Parameter den Code klarer zu strukturieren
+
+SinOsc.ar(freq: 440, phase: pi)
+
+
+// Alternative Schreibweise für Methodenaufrufe
+// ... erinnert dann mehr an die Schreibweise von Funktionen in
+// Python/C oder Mathematik
+
+5.sin
+sin(5)
+
+5.neg
+neg(5)
+
+2.pow(10)
+pow(2, 10)
+
+// [Empfänger].[Nachricht](Argument1, Argument2, ...)
+// [Nachricht](Empfänger, Argument1, Argument2)
+
+// Das ganze ist allgemeing gültig
+SinOsc.ar(440)
+ar(SinOsc, 440)
+
+// Auch das funktioniert - auch wenn man Code sehr selten so sieht
+RLPF.ar(SoundIn.ar, SinOsc.kr(0.1).range(100, 2000), 0.5);
+ar(RLPF, ar(SoundIn), range(kr(SinOsc, 0.1), 100, 2000), 0.5);
+
+// Für Methodenaufrufe mit nur einem Argument gibt es auch
+// eine Nachricht die an eine binäre Operation erinnert
+
+// [Empfänger] [Nachricht]: [Argument]
+5.pow(2)
+pow(5, 2)
+5 pow: 2
+
+SinOsc.ar(220)
+ar(SinOsc, 220)
+SinOsc ar: 220
+
+// ACHTUNG! Hier wird dann wieder alles von-links-nach-rechts ausgewertet
+
+// ungültig
+1 + SinOsc ar: 220
+
+// 2 + 2 wird als erstes ausgewertet
+2 + 2 pow: 10
+4 pow: 10
+
+2 + (2 pow: 10)
+
+// Tatsächlich sind binäre Operationen in SuperCollider auch Methodenaufrufe.
+// Der erste Operand ist hierbei der Empfänger, der zweite Operand das Argument.
+// Allerdings fällt hier dann der Doppelpunkt weg.
+
+// +, -, *, /,
+
+4 + 4
+
+// Integer markieren und Cmd+I bzw. Strg+I ruft den Code der
+// Integer Klasse auf. Hier sieht man auch die Definition der
+// Methoden für die arithmetischen Operationen
+Integer
+
+
+// Auch viele grundlegende Kontrollstrukturen in SuperCollider
+// sind eigentlich nichts weiteres als Methodenaufrufe, so
+// auch .if
+
+(
+a = 2;
+(a > 5).if({
+	"Wahr".postln;
+}, {
+	"Falsch".postln;
+});
+)
+
+// Durch die Funktions-Schreibweise und ein bisschen
+// syntactic Sugar, der in bestimmten Fällen das Weglassen
+// von Klammern erlaubt kann man in SuperCollider einige
+// Sachen auch wie in C oder ähnlichen Programmiersprachen
+// schreiben. (Ich persönlich bevorzuge die obere Schreibweise,
+// da hier klarer ist was eigentlich passiert)
+
+(
+a = 10;
+
+if(a > 5) {
+	postln("Wahr");
+}
+)
+
+// Help: Syntactic Shortcuts
+
+
+// Auch Konstruktoren sind syntactic Sugar. Eigentlich wird
+// die .new Methode einer Klasse aufgerufen.
+
+Ndef(\bla, {SinOsc.ar(440)})
+Ndef.new(\bla, {SinOsc.ar(440)})
+new(Ndef, \bla, {ar(SinOsc, 440)})
+
+// seltsam ...
+Ndef new: \bla
+
+
+
+// Funktionen sind in SuperCollider stets anonym (ohne Namen). Aber
+// wir können einer Funktion dann einen Namen geben indem wir sie
+// einer Variable zuordnen.
+
+/*
+def x(a, b):
+   return a * b
+
+x(5, 10)
+*/
+
+(
+x = {arg a, b;
+	a * b;
+};
+
+x.value(5, 10);
+// value(x, 5, 10);
+)
+
+(
+x = {|a, b|
+	a * b;
+};
+// Kurzschreibweise für Funktionsaufruf
+x.(5, 10);
+)
+
+// Wir können bei den Funktionsargumenten auch Standardwerte
+// angeben. Genauso können wir Argumente auch per Namen übergeben.
+
+
+(
+x = {|a=2, b=10|
+	a * b;
+};
+
+// x.value;
+// x.value(5);
+x.value(b: 100)
+)
+
+// Help: Writing Classes
+// (für diejenigen die es interessiert)
+
+
+// Booleans und bedingte Anweisungen
+
+/* Python
+
+if alter > 16:
+   print("Darf Wein kaufen")
+elif alter == 16:
+   print("Glück gehabt!")
+else:
+   print("Darf keinen Wein kaufen")
+
+
+if(alter > 16) {
+
+} else if(alter == 16) {
+
+} else {
+
+}
+*/
+
+
+// Boolesche Werte (Wahr oder Falsch)
+
+true
+false
+
+// Vergleichsoperationen
+
+5 == 5;
+4 == 5;
+
+5 > 5;
+5 >= 5;
+
+4 < 5;
+
+5 != 5
+4 != 5
+
+// Äquivalenz und Identität
+
+5 === 5
+
+"Apfel" === "Apfel"
+"Apfel" == "Apfel"
+
+(
+x = "Apfel";
+y = x;
+x === y
+)
+
+true.not // !true
+false.not
+
+(3 > 5).not
+
+// or, and
+
+// Und: &&
+// Or: ||
+// XOR: xor:
+
+true && true;
+
+false || true;
+true || true;
+
+true xor: false;
+true xor: true;
+
+(5 < 10) && (50 < 100)
+
+// Es gibt auch viele Methoden in der sclang Standardbibliothek
+// die einen Boolean-Wert zürckgeben
+
+8.isPrime
+3.isPrime
+
+[1, 2, 3, 5].includes(5)
+
+
+// Bedingte Anweisung ist im Grunde ein Methodenaufruf auf einen
+// Boolean-Wert mit 2 Argumenten, einer Funktion die ausgeführt wird
+// wenn der Wert wahr ist, und eine Funktion die ausgeführt wird wenn
+// der Wert falsch ist!
+
+(
+x = 12;
+
+(x >= 18).if({
+	"Patrick darf Gin kaufen".postln;
+}, {
+	"Patrick darf keinen Gin kaufen".postln;
+});
+)
+
+// Die if Methode gibt auch wieder das Ergebnis der Funktion zurück
+
+(
+x = 12;
+y = (x >= 18).if({"Gin"}, {"Apfelsaft"});
+y.postln;
+)
+
+// Da jedes Objekt auf die .value Methode hört (und sich dann selber
+// zurückgibt) brauchen wir hier allerdings gar keine Funktion!
+
+(
+x = 12;
+y = (x >= 18).if("Gin", "Apfelsaft");
+y.postln;
+)
+
+// Wird ein Argument nicht gesetzt ist es automatisch nil. nil
+// Bedeutet dass eine Variable kein Wert/Objekt zugewiesen ist.
+// Es erfüllt die Funktion des Null-Zeigers anderer Programmiersprachen.
+
+(
+x = 12;
+y = (x >= 18).if("Gin");
+)
+
+nil; // nichts
+0; // Ganzzahl: 0
+
+
+// sclang & scsynth
+
+// Wichtig: Bedingte Anweisungen existieren nicht auf der Serverseite.
+// Man kann zwar bedingte Anweisungen nutzen aber diese werden dann
+// bereits bei der Erstellung des Synthesegraphen ausgeführt.
+
+(
+x = 18;
+Ndef(\ok, {
+	(x >= 18).if({
+		Saw.ar(300);
+	}, {
+		SinOsc.ar(300);
+	});
+}).play;
+)
+
+
+
+(
+// geht so nicht.
+Ndef(\ok, {
+	var lfo = SinOsc.kr(0.5);
+	(lfo >= 0).if({
+		Saw.ar(300);
+	}, {
+		SinOsc.ar(300);
+	});
+}).play;
+)
+
+// Vergleichsoperatoren funktionieren allerdings! Sie geben
+// ein Signal zurück das entweder 0 (falsch) oder 1 (wahr) ist.
+
+(
+// geht so!
+Ndef(\ok, {
+	var lfo = SinOsc.kr(0.5);
+	var gate = lfo >= 0;
+	(Saw.ar(440) * gate) + (SinOsc.ar(440) * (1.0 - gate));
+}).play;
+)
+
+
+(
+// geht so!
+Ndef(\ok, {
+	var gate = MouseX.kr(0, 1) >= 0.5;
+	(Saw.ar(440) * gate) + (SinOsc.ar(440) * (1.0 - gate));
+}).play;
+)
+
+// Mit Select haben wir eine weitere Möglichkeit unser Signal
+// zu verzweigen. Es repräsentiert hierbei viel weniger eine
+// bedingte Anweisung sondern den Index-Operator bei Arrays.
+
+// Select
+(
+Ndef(\ok, {
+	var sigs = [SinOsc.ar(220), Saw.ar(220), Saw.ar(220/4)];
+	Select.ar(SinOsc.kr(1).range(0,3), sigs);
+}).play;
+)
+
+
+
+// Select
+(
+Ndef(\ok, {
+	var sigs = [SinOsc.ar(220), Saw.ar(220), Saw.ar(220/4)];
+	Select.ar(MouseX.kr(0, 3), sigs);
+}).play;
+)
+
+
+// Select
+(
+Ndef(\ok, {
+	var sigs = [SinOsc.ar(220), Saw.ar(220), Saw.ar(220/4)];
+	Select.ar(LFSaw.ar(XLine.kr(0.05, 10, 10)).range(0, 3), sigs);
+}).play;
+)
+
+
+// SelectXFocus um zu überblenden
+(
+Ndef(\ok, {
+	var sigs = [SinOsc.ar(220), Saw.ar(220), Saw.ar(220/4)];
+	SelectXFocus.ar(LFSaw.ar(XLine.kr(0.05, 10, 10)).range(0, 3), sigs, wrap: true);
+}).play;
+)
