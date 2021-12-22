@@ -323,4 +323,222 @@ x.value(b: 100)
 // (für diejenigen die es interessiert)
 
 
-// Next: Bedingte Anweisungen, Schleifen, Scope, ...
+// Booleans und bedingte Anweisungen
+
+/* Python
+
+if alter > 16:
+   print("Darf Wein kaufen")
+elif alter == 16:
+   print("Glück gehabt!")
+else:
+   print("Darf keinen Wein kaufen")
+
+
+if(alter > 16) {
+
+} else if(alter == 16) {
+
+} else {
+
+}
+*/
+
+
+// Boolesche Werte (Wahr oder Falsch)
+
+true
+false
+
+// Vergleichsoperationen
+
+5 == 5;
+4 == 5;
+
+5 > 5;
+5 >= 5;
+
+4 < 5;
+
+5 != 5
+4 != 5
+
+// Äquivalenz und Identität
+
+5 === 5
+
+"Apfel" === "Apfel"
+"Apfel" == "Apfel"
+
+(
+x = "Apfel";
+y = x;
+x === y
+)
+
+true.not // !true
+false.not
+
+(3 > 5).not
+
+// or, and
+
+// Und: &&
+// Or: ||
+// XOR: xor:
+
+true && true;
+
+false || true;
+true || true;
+
+true xor: false;
+true xor: true;
+
+(5 < 10) && (50 < 100)
+
+// Es gibt auch viele Methoden in der sclang Standardbibliothek
+// die einen Boolean-Wert zürckgeben
+
+8.isPrime
+3.isPrime
+
+[1, 2, 3, 5].includes(5)
+
+
+// Bedingte Anweisung ist im Grunde ein Methodenaufruf auf einen
+// Boolean-Wert mit 2 Argumenten, einer Funktion die ausgeführt wird
+// wenn der Wert wahr ist, und eine Funktion die ausgeführt wird wenn
+// der Wert falsch ist!
+
+(
+x = 12;
+
+(x >= 18).if({
+	"Patrick darf Gin kaufen".postln;
+}, {
+	"Patrick darf keinen Gin kaufen".postln;
+});
+)
+
+// Die if Methode gibt auch wieder das Ergebnis der Funktion zurück
+
+(
+x = 12;
+y = (x >= 18).if({"Gin"}, {"Apfelsaft"});
+y.postln;
+)
+
+// Da jedes Objekt auf die .value Methode hört (und sich dann selber
+// zurückgibt) brauchen wir hier allerdings gar keine Funktion!
+
+(
+x = 12;
+y = (x >= 18).if("Gin", "Apfelsaft");
+y.postln;
+)
+
+// Wird ein Argument nicht gesetzt ist es automatisch nil. nil
+// Bedeutet dass eine Variable kein Wert/Objekt zugewiesen ist.
+// Es erfüllt die Funktion des Null-Zeigers anderer Programmiersprachen.
+
+(
+x = 12;
+y = (x >= 18).if("Gin");
+)
+
+nil; // nichts
+0; // Ganzzahl: 0
+
+
+// sclang & scsynth
+
+// Wichtig: Bedingte Anweisungen existieren nicht auf der Serverseite.
+// Man kann zwar bedingte Anweisungen nutzen aber diese werden dann
+// bereits bei der Erstellung des Synthesegraphen ausgeführt.
+
+(
+x = 18;
+Ndef(\ok, {
+	(x >= 18).if({
+		Saw.ar(300);
+	}, {
+		SinOsc.ar(300);
+	});
+}).play;
+)
+
+
+
+(
+// geht so nicht.
+Ndef(\ok, {
+	var lfo = SinOsc.kr(0.5);
+	(lfo >= 0).if({
+		Saw.ar(300);
+	}, {
+		SinOsc.ar(300);
+	});
+}).play;
+)
+
+// Vergleichsoperatoren funktionieren allerdings! Sie geben
+// ein Signal zurück das entweder 0 (falsch) oder 1 (wahr) ist.
+
+(
+// geht so!
+Ndef(\ok, {
+	var lfo = SinOsc.kr(0.5);
+	var gate = lfo >= 0;
+	(Saw.ar(440) * gate) + (SinOsc.ar(440) * (1.0 - gate));
+}).play;
+)
+
+
+(
+// geht so!
+Ndef(\ok, {
+	var gate = MouseX.kr(0, 1) >= 0.5;
+	(Saw.ar(440) * gate) + (SinOsc.ar(440) * (1.0 - gate));
+}).play;
+)
+
+// Mit Select haben wir eine weitere Möglichkeit unser Signal
+// zu verzweigen. Es repräsentiert hierbei viel weniger eine
+// bedingte Anweisung sondern den Index-Operator bei Arrays.
+
+// Select
+(
+Ndef(\ok, {
+	var sigs = [SinOsc.ar(220), Saw.ar(220), Saw.ar(220/4)];
+	Select.ar(SinOsc.kr(1).range(0,3), sigs);
+}).play;
+)
+
+
+
+// Select
+(
+Ndef(\ok, {
+	var sigs = [SinOsc.ar(220), Saw.ar(220), Saw.ar(220/4)];
+	Select.ar(MouseX.kr(0, 3), sigs);
+}).play;
+)
+
+
+// Select
+(
+Ndef(\ok, {
+	var sigs = [SinOsc.ar(220), Saw.ar(220), Saw.ar(220/4)];
+	Select.ar(LFSaw.ar(XLine.kr(0.05, 10, 10)).range(0, 3), sigs);
+}).play;
+)
+
+
+// SelectXFocus um zu überblenden
+(
+Ndef(\ok, {
+	var sigs = [SinOsc.ar(220), Saw.ar(220), Saw.ar(220/4)];
+	SelectXFocus.ar(LFSaw.ar(XLine.kr(0.05, 10, 10)).range(0, 3), sigs, wrap: true);
+}).play;
+)
