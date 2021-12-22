@@ -542,3 +542,193 @@ Ndef(\ok, {
 	SelectXFocus.ar(LFSaw.ar(XLine.kr(0.05, 10, 10)).range(0, 3), sigs, wrap: true);
 }).play;
 )
+
+
+// Schleifen
+
+// while Schleife als bedingte Schleife. Bedingung steht stehts in einer Funktion
+// und muss true oder false zurückgeben. Der eigentliche Schleifenrumpf wird als
+// Argument übergeben und wird solange aufgerufen bis die Bedingung false wird.
+
+(
+var i = 0;
+{ i < 10 }.while({
+	i.postln;
+	i = i + 1;
+});
+)
+
+
+/*
+import random
+
+wurf = 0
+while wurf != 6:
+   wurf = random.randint(1, 6)
+   print(wurf)
+
+*/
+
+(
+var wurf = 0;
+{ wurf != 6 }.while({
+	wurf = 6.rand + 1;
+	wurf.postln;
+});
+)
+
+// wirft mittlerweile einen Fehler! Früher wäre dies eine Endlosschleife.
+(
+var wurf = 0;
+( wurf != 6 ).while({
+	wurf = 6.rand + 1;
+	wurf.postln;
+});
+)
+
+
+// Es gibt in SuperCollider eine for-Schleife. Diese wird aber relativ
+// selten benutzt, da die .do Methode viel mehr kann!
+
+/*
+for i in range(0, 6):
+   print(i)
+*/
+
+(
+0.for(5, {|i|
+	i.postln;
+})
+)
+
+
+// .do eignet sich perfekt als Ersatz für eine for-Schleifem, z.B.
+// hier als einfache Zählschleife.
+
+(
+5.do({|i|
+	i.postln;
+});
+)
+
+// Wird die .do Methode auf einen Array aufgerufen dann wird über
+// jedes Element des Arrays iteriert.
+
+(
+["Apfel", "Birne", "Kiwi"].do({|value, i|
+	i.postln;
+	value.postln;
+});
+)
+
+// Über diesen Syntax können wir einfache Zahlenreihen erstellen.
+// Über diese können wir dann auch mit .do iterieren!
+
+(100..150);
+(100, 102..150);
+
+
+// Let's make some sound!
+
+
+(
+SynthDef(\pling, {|freq=440|
+	var env = EnvGen.ar(Env.perc(0.01, 1), doneAction: 2);
+	var sig = SinOsc.ar(freq).dup * env * 0.08;
+	Out.ar(0, sig);
+}).add;
+)
+
+
+// Alles zusammen ausgeführt.
+
+(
+((1..4) * 220).do ({|freq|
+	freq.postln;
+	Synth(\pling, [\freq, freq]);
+});
+)
+
+// Mit .wait können wir die Ausführung um eine bestimmte Zeit unterbrechen um
+// unserem Code z.B. eine zeitliche Struktur zu geben. Allerdings können wir nicht
+// im Haupt-Thread warten und müssen unseren Code in einer Routine laufen lassen.
+
+// Help: Routine
+
+// {}.fork ist ein praktischer Weg um aus einer Funktion eine Routine zu erzeugen
+// und diese abzuspielen. Dadurch können wir mehrere paralelle Codestränge laufen lassen.
+
+
+(
+x = {
+	((1..16) * 220).do ({|freq|
+		freq.postln;
+		Synth(\pling, [\freq, freq]);
+		0.25.wait;
+	})
+}.fork;
+)
+
+// Wichtig ist die Reihenfolge der Ausführung! In SuperCollider wird nie
+// etwas wirklich paralell ausgeführt. Der aktuelle Thread bzw. die aktuelle
+// Routine muss immer erst mit ihrer Ausführung abschliessen bevor die nächste
+// Routine ans Werk darf. Somit wird bei .fork die Routine auch nicht sofort
+// ausgeführt sondern erst wenn unser Code durchgelaufen ist.
+
+(
+"A".postln;
+{
+	"B".postln;
+	inf.do ({
+		Synth(\pling, [\freq, 60.midicps]);
+		1.wait;
+		Synth(\pling, [\freq, (60 + 12.rand).midicps]);
+		1.wait;
+	});
+}.fork;
+"C".postln;
+)
+
+// Natürlich können wir auch Schleifen in Schleifen setzen ...
+
+(
+{
+	4.do {|i|
+		var root = 60 + i;
+
+		4.do ({
+			Synth(\pling, [\freq, root.midicps]);
+			1.wait;
+			Synth(\pling, [\freq, (root + 12.rand).midicps]);
+			1.wait;
+		});
+
+		2.wait;
+	}
+}.fork;
+)
+
+// Und genauso können wir innerhalb einer Routine weitere Routinen erzeugen!
+// Ab irgendeinem Punkt wird es etwas undurchsichtig - aber dadurch lassen
+// sich interessante muiskalische Strukturen erzeugen!
+
+(
+{
+	12.do {|i|
+		var root = 60 + i;
+		("Start Root:" + root).postln;
+
+		{
+			8.do ({|e|
+				("Start Schleife für Root:" + i + ", Schleifendurchlauf" + e).postln;
+				Synth(\pling, [\freq, root.midicps]);
+				1.wait;
+				Synth(\pling, [\freq, (root + e.rand).midicps]);
+				1.wait;
+			});
+		}.fork;
+
+		2.25.wait;
+	}
+}.fork;
+)
