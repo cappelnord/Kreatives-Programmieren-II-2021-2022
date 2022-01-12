@@ -732,3 +732,10 @@ x = {
 	}
 }.fork;
 )
+
+
+// Streams
+// Routine als Stream
+// Pattern als Stream
+// Komposition und Operationen auf Funktionen, Streams, Patterns
+// Closures
