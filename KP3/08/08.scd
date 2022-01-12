@@ -734,8 +734,185 @@ x = {
 )
 
 
-// Streams
-// Routine als Stream
-// Pattern als Stream
-// Komposition und Operationen auf Funktionen, Streams, Patterns
-// Closures
+// Frohes Neues Jahr!
+
+// Stream
+
+// Wir können aus einem Pattern-Objekt einen Stream
+// erzeuge und diesem Stream dann einen oder mehrere
+// Werte entnehmen (mittels der .next Methode).
+
+x = Pseq([10, 20, 30], 2);
+y = x.asStream;
+
+y.next;
+y.nextN(3);
+
+// Ein Stream endet sobald ein nil zurückgegeben wird.
+
+// Genauso wie bei Funktionen (was hier auch noch mal
+// demonstriert wird) können wir auch mehrere Streams
+// oder Patternobjekte über Operationen miteinander verbinden.
+
+a = {10.rand};
+b = {[1, 10, 100, 1000].choose};
+c = a * b;
+c.value;
+
+p = Pseq([1, 2, 3], inf) * Pseq([10, 100], inf);
+x = p.asStream;
+x.next;
+
+z = x * 1000;
+z.next;
+
+// Wir können Streams in Form von Routinen selber definieren.
+// Hierbei nutzen wir .yield um die Ausführung der Routine zu
+// unterbrechen und einen Wert zurückzugeben.
+
+(
+r = Routine({
+	1.yield;
+	22.yield;
+	333.yield;
+	4444.yield;
+});
+)
+
+r.next;
+
+// Mit .embedInStream können Streams und Pattern in eine
+// andere Routine bzw. Stream eingebettet werden. Es werden
+// dann erst alle Werte aus dem Stream entnommen und
+// zurückgegeben bevor der eigentliche Stream fortgesetzt wird.
+
+
+(
+v = Routine({
+	2.do ({
+		10.yield;
+		100.yield;
+	});
+});
+)
+
+p = Pseq([20, 200], 2);
+
+(
+r = Routine({
+	inf.do ({
+		1.yield;
+		22.yield;
+		333.yield;
+		4444.yield;
+		v.embedInStream; // ist nach dem ersten Durchlauf aufgebraucht
+		// v.reset.embedInStream;
+		p.embedInStream;
+	});
+});
+)
+
+
+// Der Pbind ist auch ein Pattern welches in der Regel weitere
+// Patternobjekte beinhaltet.
+
+(
+p = Pbind(
+	\dur, Pseq([1, 2, 3], inf),
+	\degree, Pseq([0, 2, 4, 7], inf),
+)
+)
+
+x = p.asStream;
+
+// Pbinds erzeugen Event-Streams, diese benötgen ein leeres Event als Argument.
+// Dieses wird dann mit den Werten aus den jeweiligen Streams gefüllt.
+
+x.next(())
+
+p.play;
+
+// Help: Understanding Streams, Patterns and Events - Part 1
+
+
+// Scope (Gültigkeitsbereich)
+
+// Interpretervariablen
+// a-z
+
+// Interpretervariablen sind global gültig, können allerdings nur
+// die Buchstaben a bis z genutzt werden.
+
+a = 200;
+b = 100;
+c = a * b;
+
+s.boot;
+
+// Alternativer Zugriff auf die Interpretervariablen über das
+// Interpreter Objekt.
+this.a;
+
+
+// Umgebungsvariablen starten mit ~ und beziehen sich stets auf das
+// aktuelle Environment "currentEnvironment". Im Grunde ist currentEnvironment
+// ein Dictionary.
+
+~apfel = 1000;
+~birne = 200;
+
+~apfel * 1000;
+
+~f = {~apfel * ~birne}
+
+~f.value
+
+currentEnvironment;
+currentEnvironment[\apfel] = 0
+
+// pusht ein neues Environment auf den Environment Stack
+Environment.push(Environment())
+
+// ~apfel ist nun nil
+~apfel;
+
+// nimmt das oberste Environment vom Stapel; unser altes
+// Environment ist nun wieder sichtbar.
+Environment.pop
+
+
+// (lokale) Variablen müssen deklariert werden. Auf die
+// Variablen kann dann außerhalb des Gültigkeitsbereiches
+// nicht mehr zugegriffen werden und Variablen mit gleichem
+// Namen sind unabhängig voneinander.
+
+(
+var apfel = 10;
+var birne = 20;
+
+apfel * birne;
+)
+
+(
+var apfel;
+apfel * 100;
+)
+
+
+// Zeigen jedoch beide Variablen auf das selbe Objekt
+// sind auch lokale Variablen wieder gewissermassen
+// miteinander gekoppelt.
+
+x = Pseq([1, 2, 3, 4], inf).asStream;
+
+(
+var apfel = x;
+apfel.next
+)
+
+(
+var birne = x;
+birne.next;
+)
+
+
