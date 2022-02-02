@@ -849,6 +849,11 @@ c = a * b;
 
 s.boot;
 
+Server.default
+s = Server.default;
+
+// Republic
+
 // Alternativer Zugriff auf die Interpretervariablen über das
 // Interpreter Objekt.
 this.a;
@@ -880,6 +885,13 @@ Environment.push(Environment())
 // Environment ist nun wieder sichtbar.
 Environment.pop
 
+// Help: ProxySpace
+// Help: Environment
+
+// Dictionary
+d = ();
+d[\ok] = 10;
+
 
 // (lokale) Variablen müssen deklariert werden. Auf die
 // Variablen kann dann außerhalb des Gültigkeitsbereiches
@@ -896,6 +908,11 @@ apfel * birne;
 (
 var apfel;
 apfel * 100;
+)
+
+(
+var apfel;
+apfel.postln;
 )
 
 
@@ -915,4 +932,202 @@ var birne = x;
 birne.next;
 )
 
+// sclang
 
+( // Keine Anweisungen zwischen Variablendeklarationen.
+var apfel = 10;
+apfel = apfel * 20;
+var birne = apfel - 1;
+)
+
+( // Keine Anweisungen zwischen Variablendeklarationen.
+var apfel = 10;
+var birne;
+apfel = apfel * 20;
+birne = apfel - 1;
+)
+
+(
+var obst = {
+	var apfel = 10;
+	var birne;
+	apfel = apfel * 20;
+	birne = apfel - 1;
+};
+
+obst.value;
+apfel.postln; // funktioniert nicht!
+)
+
+
+(
+var mult = 20;
+
+var obst = {
+	var apfel = 10;
+	var birne;
+	apfel = apfel * mult;
+	birne = apfel - 1;
+};
+
+obst.value;
+mult.postln;
+)
+
+
+
+(
+var mult = 20;
+var apfel = 100;
+
+var obst = {
+	var apfel = 10;
+	var birne;
+	apfel = apfel * mult;
+	birne = apfel - 1;
+};
+
+obst.value.postln;
+apfel.postln;
+)
+
+
+
+(
+var mult = 20;
+var apfel = 100;
+
+var obst = {
+	var birne;
+	apfel = 10;
+	apfel = apfel * mult;
+	birne = apfel - 1;
+};
+
+obst.value.postln;
+apfel.postln;
+)
+
+// Fortführung Scope
+// Closures
+
+(
+var zaehler = 0;
+
+~countUp = {
+	zaehler = zaehler + 1;
+};
+
+~reset = {
+	zaehler = 0;
+};
+
+~post = {
+	("Zählerstand: " ++ zaehler).postln;
+};
+
+~zaehler = {
+	zaehler;
+};
+)
+
+~countUp.value
+~reset.value
+~post.value
+~zaehler.value
+
+
+(
+~sequenz = {|start=36, steps=1|
+	var state = start;
+	{
+		(freq: state.midicps).play;
+		state = state + steps;
+	};
+};
+)
+
+~seq1 = ~sequenz.value(48, 1)
+~seq2 = ~sequenz.value(48, 3)
+~seq3 = ~sequenz.value(60, -1)
+
+~seq1.value
+~seq2.value
+~seq3.value
+
+
+
+
+
+(
+var state = 48;
+~sequenzGemeinsam = {|steps=1|
+	{
+		state = state + steps;
+		(freq: state.midicps).play;
+	};
+};
+)
+
+~seg1 = ~sequenzGemeinsam.value(1);
+~seg2 = ~sequenzGemeinsam.value(12);
+~seg3 = ~sequenzGemeinsam.value(-2);
+
+~seg1.value
+~seg2.value;
+~seg3.value
+
+
+// Daten/Zustand + Funktionalität
+// Funktion + Daten/Zustand
+
+
+
+
+(
+~sequenzFunktion = {|start=36, steps=1|
+	var state = start;
+	{
+		state = state + steps.value(state);
+		state.postln;
+		(freq: state.midicps).play;
+	};
+};
+)
+
+
+~seq1 = ~sequenzFunktion.value(48, 1);
+~seq1.value
+
+~seq2 = ~sequenzFunktion.value(48, {[0, 1, 2, 7, -3, -12].choose});
+~seq2.value
+
+(
+~seq3 = ~sequenzFunktion.value(48, {|state|
+	(state < 72).if({
+		[-1, 1, 2, 5, 7].choose;
+	}, {
+		[-12, -24, -36].choose;
+	});
+});
+)
+
+~seq3.value
+
+
+
+
+(
+var max = 60;
+~seq4 = ~sequenzFunktion.value(48, {|state|
+	(state < max).if({
+		[-1, 1, 2, 5, 7].choose;
+	}, {
+		max = max + 12;
+		("New Max: " ++ max).postln;
+		[-12, -24, -36].choose;
+	});
+});
+)
+
+~seq4.value
