@@ -169,6 +169,8 @@ b.sine3(
 
 
 // Nun haben wir genug Grundwissen um unseren eigenen Wavetable Synth zu bauen
+// Hinweis: Oft haben wir wenn wir mit  wellenformen experimentieren DC offset
+// Das können wir mit LeakDC eindämmen
 
 (
 SynthDef(\wave, { |buf = 0, freq = 200, amp = 0.1, gate = 1|
@@ -176,6 +178,7 @@ SynthDef(\wave, { |buf = 0, freq = 200, amp = 0.1, gate = 1|
 	var snd, env;
 	env = Linen.kr(gate, 0.1, 1, 1, doneAction:2);
 	snd = Osc.ar(buf, freq * [1, 2.01, 1.01, 2]).sum * 0.1 * env;
+	snd = LeakDC.ar(snd);
 
 	Out.ar(0, snd !2 * amp);
 
