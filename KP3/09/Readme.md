@@ -8,7 +8,7 @@ Zufall
 * Nutzt fork/Task und .wait zur zeitlichen Strukturierung. Falls ihr wollt dürft ihr aber auch gerne Patterns nutzen. Nutzt SynthDefs für die Klangerzeugung. Bei der Wahl der Synthesetechniken gibt es keine Einschränkung, auch nicht ob die SynthDefs selber zufällige Entscheidungen enthalten oder komplett deterministisch sind. 
 * Seid frei in der Wahl anderer Techniken (solange Zufall/Wahrscheinlichkeit ein wichtiger Bestandteil ist). Nutzt gerne auch andere Techniken oder Tools um das Stück am Ende zu arrangieren/bearbeiten/mischen. Legt aber dann in der Präsentation eurer Übungsaufgabe diese Schritte dar.
 
-* **Erste Präsentation von Ergebnissen: XX.02.2022**
+* **Erste Präsentation von Ergebnissen: 16.02.2022**
 * **Finale Abgabe: 15.03.2022**
 
 * Abgabe Code via GitHub Repository. Abgabe finale Audiodatei via E-Mail.

@@ -9,12 +9,11 @@
 * 10.11.2021 - **[SuperCollider IV](05)** 
 * 17.11.2021 - **[SuperCollider V](06)** 
 * 24.11.2021 - **[SuperCollider VI](07)** (Präsentation Übungsaufgaben)
-* 01.12.2021 - **[sclang](08)** (Eventuell weiterhin Präsentation Übungsaufgaben)
-* 08.12.2021 - **[sclang II](08)** (Eventuell weiterhin Präsentation Übungsaufgaben)
-* 15.12.2021 - **[sclang III](08)** (Eventuell weiterhin Präsentation Übungsaufgaben)
-* 22.12.2021 - **[Zufall ??](11)**
-* 12.01.2022
-* 19.01.2022
-* 26.01.2022
-* 02.02.2022
+* 01.12.2021 - **[sclang](08)**
+* 08.12.2021 - **[sclang II](08)**
+* 15.12.2021 - **[sclang III](08)**
+* 22.12.2021 - **[sclang IV](08)**
+* 12.01.2022 - **[sclang V](08)**
+* 19.01.2022 - **[sclang VI](08)**
+* 02.02.2022 - **[Zufall I](09)**
 * 09.02.2022
