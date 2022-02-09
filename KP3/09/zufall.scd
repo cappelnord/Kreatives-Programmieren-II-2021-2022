@@ -36,3 +36,29 @@
 	}
 }.fork;
 )
+
+
+// Zufall II - 09.02.2022
+
+(
+{
+	thisThread.randSeed = 6002;
+	6.do {
+		6.rand.postln;
+		1.wait;
+	}
+}.fork;
+)
+
+
+
+// Siehe auch: RandID
+(
+{
+	RandSeed.kr(1, 6002);
+	SinOsc.ar(LFNoise0.kr(0.5).range(220, 880)) * 0.1;
+}.play
+)
+
+
+
