@@ -4,9 +4,14 @@ Hier soll ein Repository mit Notizen, Materialien und Code zum Modul *Kreatives 
 
 ## Lehrveranstaltungen
 
+* [Kreatives Programmieren 4](KP4)
+* [Übung zu Kreatives Programmieren 4](UEB4)
+* [Creative Coding Lab](CCL)
+
+### Letztes Semester
+
 * [Kreatives Programmieren 3](KP3)
 * [Übung zu Kreatives Programmieren 3](UEB3)
-* [Creative Coding Lab](CCL)
 
 Zusätzlich eine Sammlung an (hoffentlich) hilfreichen [Code-Snippets](FAQ) die auf Anfragen von Studierenden entstanden sind. Diese Snippets sind teilweise aus dem letzen Jahr übertragen.
 
