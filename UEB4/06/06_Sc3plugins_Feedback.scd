@@ -156,7 +156,7 @@ InFeedback
 ~grainbuf = Buffer.alloc(s, 44100, 1);
 
 (
-SynthDef("help", { arg out=0, in=0;
+SynthDef(\Feedb, { arg out=0, in=0;
 
 	var input, sound, delay;
 
@@ -178,7 +178,7 @@ SynthDef("help", { arg out=0, in=0;
 }).add;
 )
 
-~x = Synth(\help);
+~x = Synth(\Feedb);
 
 
 // Feedback freeeeeze
