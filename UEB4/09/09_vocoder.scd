@@ -28,6 +28,8 @@ n.sendMsg("/chat", "Hallo");
 // Unser Vocoder aus der Übung
 // Dieser ist nachgebaut nach dem Schema aus dem deutschen Wikipedia Artikel zu Vocoder
 
+~sample = Buffer.readChannel(s,"YourSamplePath", channels: [0]);
+
 (
 SynthDef(\vocoder, { |buffer, rq = 0.05, amp = 10, in = 0|
 
@@ -60,7 +62,7 @@ SynthDef(\vocoder, { |buffer, rq = 0.05, amp = 10, in = 0|
 }).add
 )
 
-Synth(\vocoder, [\buffer, ~sample2]);
+Synth(\vocoder, [\buffer, ~sample]);
 
 
 // Für eine exaktere Wiedergabe hoher Transienten in der Stimme können wir mit diesem Trick arbeiten:
@@ -116,7 +118,7 @@ SynthDef(\vocTransient, { |buffer, rq = 0.05, amp = 10, in = 0|
 }).add
 )
 
-Synth(\vocTransient, [\buffer, ~sample2]);
+Synth(\vocTransient, [\buffer, ~sample]);
 
 
 
@@ -130,7 +132,7 @@ MIDIIn.connectAll;
 (
 ~fxbus = Bus.audio(s, 2);
 
-~sample2 = Buffer.readChannel(s,"/Users/anselmweber/Desktop/Samples/Samurai Cop - I'm telling these son of a bitches..wav", channels: [0]);
+~sample2 = Buffer.readChannel(s,"AnotherSamplePath", channels: [0]);
 ~synths = Array.newClear(128);
 
 
@@ -213,7 +215,7 @@ s.reboot;
 (
 ~fxbus = Bus.audio(s, 2);
 
-~sample2 = Buffer.readChannel(s,"/Users/anselmweber/Desktop/Samples/Samurai Cop - I'm telling these son of a bitches..wav", channels: [0]);
+~sample2 = Buffer.readChannel(s,"yourSample", channels: [0]);
 ~synths = Array.newClear(128);
 
 
